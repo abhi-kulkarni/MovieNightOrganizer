@@ -7,7 +7,7 @@ class Friend(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     firstname=db.Column(db.String(100),nullable=False)
     lastname=db.Column(db.String(100),nullable=False)
-    children = db.relationship('MovieList', backref='parent', passive_deletes=True)
+    movie_list = db.relationship('MovieList', backref='parent', passive_deletes=True)
 
     def to_dict(self):
         fields = {}
