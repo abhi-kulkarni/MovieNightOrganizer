@@ -1,7 +1,6 @@
 from flask import Flask
 import flask
 import os
-from decimal import Decimal
 import json
 from flask_sqlalchemy import SQLAlchemy
 
@@ -13,17 +12,8 @@ class Config:
                      "\xbe\x07Sw,h.\x81\xdb\x7f\x18\xb0j\xf1\xfd=`_\xb5\xb3\xb3\x15\xefNks\x991}\x12m\xc8")
     SQLALCHEMY_DATABASE_URI = env(
         "MOVIE_NIGHT_ORGANIZER_SQL_ALCHEMY_DATABASE_URI", "mysql://<user>:<password>@localhost/movie_night_organizer")
-  
-
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, Decimal):
-            return float(o)
-        return super(DecimalEncoder, self).default(o)
 
 app = Flask(__name__)
-
-app.json_encoder = DecimalEncoder
 
 app.config.from_object(Config())
 
