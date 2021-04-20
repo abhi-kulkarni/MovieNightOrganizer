@@ -1,0 +1,52 @@
+.custom_container{
+    background-color: #F8F9FA;
+    padding: 20px;
+}
+
+li{
+    padding-left: 20px !important;
+}
+
+ul{
+    list-style:none;
+}
+
+th a{
+    text-decoration: none !important;
+}
+
+.sortArrow{
+    margin: 0px 0px 2px 12px !important;
+    font-size: 10px !important;
+}
+
+.table{
+    border: none !important;
+    margin: 0px !important;
+}
+
+.pag{
+    padding: 5px 0px 5px 10px!important;
+}
+
+.card{
+    border-radius: 20px !important;
+}
+
+.no_top_bottom_border{
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+.organizer_messages #messages li {
+    padding-left: 0px !important;
+    padding-right: 25px !important;
+}
+
+.custom_msgs{
+    font-weight: bold;
+}
+
+#back_button:hover {
+    color: #0879FA !important;
+}

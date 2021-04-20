@@ -1,16 +1,23 @@
 {
-    "name": "example-create-react-app-express",
-    "version": "1.0.0",
-    "scripts": {
-        "client": "cd react_app && npm start",
-        "server": "nodemon server.js",
-        "dev": "concurrently --kill-others-on-fail \"npm server\" \"npm react_app\""
-    },
-    "dependencies": {
-        "body-parser": "^1.18.3",
-        "express": "^4.16.4"
-    },
-    "devDependencies": {
-        "concurrently": "^4.0.1"
-    }
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "abhishek",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-flash": "github:RGBboy/express-flash",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.10.0",
+    "request": "^2.88.2"
+  }
 }

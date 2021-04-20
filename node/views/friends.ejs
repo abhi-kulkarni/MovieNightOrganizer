@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/head'); -%>
+</head>
+  
+<body>
+    <%- include('partials/navbar'); -%>
+    <div class="custom_container container">
+        <div style="padding: 0px; margin: 0px" class="row">
+            <div style="margin-top: 20px;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <h5 class="text-muted">Add Friends</h5>
+            </div>
+            <div style="cursor: pointer; margin-top: 20px;" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <span data-tooltip="tooltip" title="Add Friend" onclick="openAddFriendsModal()" style="color:#0879FA" class="material-icons">
+                    person_add
+                </span>
+            </div>
+        </div>
+        <div style="padding: 0px; margin: 10px 0px" class="card row">
+          <% if(friends.length > 0){ %>
+            <div style="padding: 0px; margin: 0px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <table class="friends_table table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="no_top_bottom_border text-center">#</th>
+                      <th class="no_top_bottom_border text-center">First Name</th>
+                      <th class="no_top_bottom_border text-center">Last Name</th>
+                      <th style="width: 15%;" class="no_top_bottom_border text-center">Movie Count</th>
+                      <th style="width: 10%;" class="no_top_bottom_border text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% for(var i=0; i<friends.length; i++) {%>
+                    <tr>
+                      <td class="text-center"><%= friends[i].id %></td>
+                      <td class="text-center"><%= friends[i].firstname %></td>
+                      <td class="text-center"><%= friends[i].lastname %></td>
+                      <td style="cursor: pointer;width: 15%;" class="text-center">
+                        <span class="badge badge-primary badge-pill">
+                          <% if(friends[i].movie_count > 5){ %>
+                            5+
+                          <% } else{ %>  
+                            <%= friends[i].movie_count %>
+                         <% } %>
+                        </span>
+                      </td>
+                      <td>
+                          <div style="padding: 0px;margin: 0px" class="row text-center">
+                              <div style="padding: 0px;margin: 0px;" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 ">
+                                <div data-toggle="modal" data-tooltip="tooltip" title="Edit" data-target="#friend_<%= friends[i].id %>" style="font-size:1.1rem;cursor: pointer; color:#0879FA" class="material-icons">
+                                  edit
+                                </div>
+                              </div>
+                              <div style="padding: 0px;margin: 0px;" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 ">
+                                <div onclick="location.href='/delete_friend/<%= friends[i].id %>'" data-tooltip="tooltip" title="Delete" style="cursor: pointer;color:red;font-size:1.1rem" class="material-icons">delete</div>
+                              </div>
+                              <div style="padding: 0px;margin: 0px;" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 ">
+                                <div onclick="location.href = '/movies/<%= friends[i].id %>'" data-tooltip="tooltip" title="View Movies" style="cursor: pointer;color:#0F9D58;font-size:1.1rem;" class="material-icons">local_movies</div>
+                              </div>
+                            </div>
+                          <!-- Edit Friend Modal -->
+                          <div data-keyboard="false" data-backdrop="static" class="edit_friends_modal modal fade" id="friend_<%= friends[i].id %>" tabindex="-1" role="dialog" aria-labelledby="editFriendsModalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="#friend_title_<%= friends[i].id %>">Edit Friend</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div style="padding:5px;margin:0px" class="row modal-body">
+                                    <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="edit_friends_form_modal_<%= friends[i].id %>" name="edit_friends_form_modal_<%= friends[i].id %>" action="edit_friend/" method="post">
+                                        <div class="row form-group">
+                                          <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <label for="friend_id_<%= friends[i].id %>">Id</label>
+                                            <input id="friend_id_<%= friends[i].id %>" class="form-control" autocomplete="off" pattern=".{1,}"  value="<%= friends[i].id %>" name="id" type="text" aria-describedby="first_id_help<%= friends[i].id %>" placeholder="Enter Your Id">
+                                          </div>
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="text-center">
+                                              <img style="cursor: pointer;" height="75" width="75" src="/images/default_friend_avatar.jpg" alt="user_profile_picture" class="rounded-circle">
+                                            </div>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <label for="first_name_<%= friends[i].id %>">First Name</label>
+                                            <input id="first_name_<%= friends[i].id %>" class="form-control" autocomplete="off" pattern=".{1,}" required  value="<%= friends[i].firstname %>" name="first_name" type="text" aria-describedby="first_name_help<%= friends[i].id %>" placeholder="Enter Your First Name">
+                                          </div>
+                                          <div style="display: none;" id="first_name_error_<%= friends[i].id %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <small id="first_name_help<%= friends[i].id %>" class="text-danger">
+                                              First Name must not be empty.
+                                            </small>      
+                                          </div>
+                                        </div>
+                
+                                        <div class="row form-group">
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <label for="last_name_<%= friends[i].id %>">Last Name</label>
+                                            <input id="last_name_<%= friends[i].id %>" class="form-control" autocomplete="off" pattern=".{1,}" required  value="<%= friends[i].lastname %>" name="last_name" type="text" aria-describedby="last_name_help_<%= friends[i].id %>" placeholder="Enter Your Last Name">
+                                          </div>
+                                          <div style="display: none;" id="last_name_error_<%= friends[i].id %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <small id="last_name_help_<%= friends[i].id %>" class="text-danger">
+                                              Last Name must not be empty.
+                                            </small>      
+                                          </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button form="edit_friends_form_modal_<%= friends[i].id %>" type="submit" class="btn btn-primary">Save</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </td>
+                    </tr>
+                  <% } %>
+                  </tbody>
+                </table>
+          </div>
+          <% } else{ %>  
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div style="margin:0px !important" class="text-center alert alert-info" role="alert">
+                  No Friends Yet.
+                </div>
+              </div>
+            </div>
+         <% } %>
+          <div class="text-center row">
+              <div style="padding: 0px 0px 15px 0px;" class="custom_msgs col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <% if(messages.success){ %>
+                  <span style="color: #0F9D58;">
+                      <%- messages.success %>
+                  </span>
+                <% } else if(messages.info){ %>  
+                    <span style="color: #0879FA;">
+                        <%- messages.info %>
+                    </span>
+                <% } else if(messages.warning){ %>  
+                    <span style="color: orange;">
+                        <%- messages.warning %>
+                    </span>
+                <% } 
+                else{ %>  
+                    <span style="color: red;">
+                        <%- messages.error %>
+                    </span>
+                <% } %>
+              </div>
+            </div>
+        </div>
+        <div data-keyboard="false" data-backdrop="static" class="modal fade" id="addFriendsModal" tabindex="-1" role="dialog" aria-labelledby="addFriendsModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addFriendsModalTitle">Add Friends</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div style="padding:5px;margin:0px" class="row modal-body">
+                    <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="add_friends_form_modal" name="add_friends_form_modal" action="add_friend/" method="post">
+                        <div class="row form-group">
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="text-center">
+                              <img style="cursor: pointer;" height="75" width="75" src="/images/default_friend_avatar.jpg" alt="user_profile_picture" class="rounded-circle">
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <label for="first_name">First Name</label>
+                            <input id="first_name" class="form-control" autocomplete="off" pattern=".{1,}" required  name="first_name" value="<%= user.first_name %>" type="text" aria-describedby="first_nameHelp" placeholder="Enter Your First Name">
+                          </div>
+                          <div style="display: none;" id="first_name_error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <small id="firstNameHelp" class="text-danger">
+                              First Name must not be empty.
+                            </small>      
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <label for="last_name">Last Name</label>
+                            <input id="last_name" class="form-control" autocomplete="off" pattern=".{1,}" required  name="last_name" value="<%= user.last_name %>" type="text" aria-describedby="last_nameHelp" placeholder="Enter Your Last Name">
+                          </div>
+                          <div style="display: none;" id="last_name_error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <small id="lastNameHelp" class="text-danger">
+                              Last Name must not be empty.
+                            </small>      
+                          </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button form="add_friends_form_modal" type="submit" class="btn btn-primary">Add</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</body>
+<%- include('partials/scripts'); -%>
+</html>    

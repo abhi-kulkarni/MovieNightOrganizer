@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/head'); -%>
+</head>
+  
+<body>
+    <%- include('partials/navbar'); -%>
+    <div class="custom_container container">
+      <div style="padding: 0px; margin: 0px" class="row">
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+            <span id="back_button" style="cursor: pointer;color:grey" data-tooltip="tooltip" title="Back" onclick="location.href='/'" class="material-icons">
+              keyboard_backspace
+            </span>
+        </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <img style="cursor: pointer;" height="75" width="75" src="/images/default_friend_avatar.jpg" alt="user_profile_picture" class="rounded-circle">
+          </div>
+      </div>
+      <div style="padding: 0px; margin: 0px" class="row">
+        <div style="margin-top: 20px;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <h5 class="text-muted">Add Movies</h5>
+        </div>
+        <div style="cursor: pointer; margin-top: 20px;" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <span data-tooltip="tooltip" title="Add Movie" onclick="openAddMoviesModal()" style="color:#0879FA" class="material-icons">
+                post_add
+            </span>
+        </div>
+      </div>
+      <div style="padding: 0px; margin: 10px 0px" class="card row">
+        <% if(movies.length > 0){ %>
+          <div style="padding: 0px; margin: 0px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <table class="movies_table table table-hover">
+                <thead>
+                  <tr>
+                    <th class="no_top_bottom_border text-center">#</th>
+                    <th class="no_top_bottom_border text-center">Name</th>
+                    <th style="width: 10%;" class="no_top_bottom_border text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i<movies.length; i++) {%>
+                  <tr>
+                    <td class="text-center"><%= movies[i].id %></td>
+                    <td class="text-center"><%= movies[i].name %></td>
+                    <td>
+                        <div style="padding: 0px;margin: 0px" class="row text-center">
+                            <div style="padding: 0px;margin: 0px;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
+                              <div data-toggle="modal" data-tooltip="tooltip" title="Edit" data-target="#movie_<%= movies[i].id %>" style="float:right;font-size:1.1rem;cursor: pointer; color:#0879FA" class="material-icons">
+                                edit
+                              </div>
+                            </div>
+                            <div style="padding: 0px;margin: 0px;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
+                            <div onclick="location.href='/delete_movie/<%= movies[i].id %>/<%= movie.friend_id %>'" data-tooltip="tooltip" title="Delete" style="cursor: pointer;color:red;font-size:1.1rem" class="material-icons">delete</div>
+                            </div>
+                          </div>
+                        <!-- Edit Movie Modal -->
+                        <div data-keyboard="false" data-backdrop="static" class="edit_movies_modal modal fade" id="movie_<%= movies[i].id %>" tabindex="-1" role="dialog" aria-labelledby="editMoviesModalTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="#movie_title_<%= movies[i].id %>">Edit Movie</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div style="padding:5px;margin:0px" class="row modal-body">
+                                  <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="edit_movies_form_modal_<%= movies[i].id %>" name="edit_movies_form_modal_<%= movies[i].id %>" action="edit_movie/" method="post">
+                                    <div class="row form-group">
+                                      <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <label for="movie_id_<%= movies[i].id %>">Id</label>
+                                        <input id="movie_id_<%= movies[i].id %>" class="form-control" autocomplete="off" pattern=".{1,}"  value="<%= movies[i].id %>" name="movie_id" type="text" aria-describedby="movie_id_help_<%= movies[i].id %>" placeholder="Enter Movie Id">
+                                      </div>
+                                      <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <label for="movie_friend_id_<%= movies[i].id %>">Friend Id</label>
+                                        <input id="movie_friend_id_<%= movies[i].id %>" class="form-control" autocomplete="off" pattern=".{1,}"  value="<%= movies[i].friend_id %>" name="friend_id" type="text" aria-describedby="movie_friend_id_help_<%= movies[i].id %>" placeholder="Enter Movie Friend Id">
+                                      </div>
+                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <label for="movie_name_<%= movies[i].id %>">Movie Name</label>
+                                        <input id="movie_name_<%= movies[i].id %>" class="form-control" autocomplete="off" pattern=".{1,}" required  value="<%= movies[i].name %>" name="movie_name" type="text" aria-describedby="movie_name_help_<%= movies[i].id %>" placeholder="Enter Movie Name">
+                                      </div>
+                                      <div style="display: none;" id="movie_name_error_<%= movies[i].id %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <small id="movie_help_<%= movies[i].id %>" class="text-danger">
+                                          Movie Name must not be empty.
+                                        </small>      
+                                      </div>
+                                    </div>
+                                  </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button form="edit_movies_form_modal_<%= movies[i].id %>" type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                <% } %>
+                </tbody>
+              </table>
+            </div>
+        <% } else{ %>  
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div style="margin:0px !important" class="text-center alert alert-info" role="alert">
+                No Movies Added Yet
+              </div>
+            </div>
+          </div>
+       <% } %>
+          <div class="text-center row">
+              <div style="padding: 0px 0px 15px 0px;" class="custom_msgs col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <% if(messages.success){ %>
+                  <span style="color: #0F9D58;">
+                      <%- messages.success %>
+                  </span>
+                <% } else if(messages.info){ %>  
+                    <span style="color: #0879FA;">
+                        <%- messages.info %>
+                    </span>
+                <% } else if(messages.warning){ %>  
+                    <span style="color: orange;">
+                        <%- messages.warning %>
+                    </span>
+                <% } 
+                else{ %>  
+                    <span style="color: red;">
+                        <%- messages.error %>
+                    </span>
+                <% } %>
+            </div>
+          </div>
+        </div>
+        <div data-keyboard="false" data-backdrop="static" class="modal fade" id="addMoviesModal" tabindex="-1" role="dialog" aria-labelledby="addMoviesModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addMoviesModalTitle">Add Movies</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div style="padding:5px;margin:0px" class="row modal-body">
+                    <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="add_movies_form_modal" name="add_movies_form_modal" action="add_movie/" method="post">
+                        <div class="row form-group">
+                          <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <label for="movie_friend_id">Friend Id</label>
+                            <input id="movie_friend_id" class="form-control" autocomplete="off" pattern=".{1,}"  value="<%= movie.friend_id %>" name="id" type="text" placeholder="Enter Movie Friend Id">
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <label for="movie_name">Movie Name</label>
+                            <input id="movie_name" class="form-control" autocomplete="off" pattern=".{1,}" required  name="movie_name" value="<%= movie.movie_name %>" type="text" aria-describedby="movieNameHelp" placeholder="Enter Movie Name">
+                          </div>
+                          <div style="display: none;" id="movie_name_error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <small id="movieNameHelp" class="text-danger">
+                              Movie Name must not be empty.
+                            </small>      
+                          </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button form="add_movies_form_modal" type="submit" class="btn btn-primary">Add</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</body>
+<%- include('partials/scripts'); -%>
+</html>    

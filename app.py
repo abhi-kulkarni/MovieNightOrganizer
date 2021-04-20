@@ -3,6 +3,7 @@ import flask
 import os
 import json
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 env = os.environ.get
 
@@ -20,6 +21,10 @@ app.config.from_object(Config())
 db = SQLAlchemy(app)
 
 db.init_app(app)
+
+cors = CORS(app, allow_headers=[
+    "Content-Type", "Authorization", "Access-Control-Allow-Credentials", "withCredentials"],
+            supports_credentials=True, resources={r"/*": {"origins": "*"}})
 
 from views import friend_views, movie_list_views
 

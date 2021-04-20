@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/head'); -%>
+</head>
+  
+<body>
+    <%- include('partials/navbar'); -%>
+    <div class="custom_container container">
+      <div style="padding: 0px; margin: 0px" class="row">
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+            <% if(!random_movie){ %>
+                <span id="back_button" style="cursor: pointer;color:grey" data-tooltip="tooltip" title="Back" onclick="location.href='/'" class="material-icons">
+                    keyboard_backspace
+                </span>
+            <% } %>
+        </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <img style="cursor: pointer;" height="75" width="75" src="/images/group_movies.jpg" alt="user_profile_picture" class="rounded-circle">
+          </div>
+      </div>
+      <% if(!random_movie){ %>
+      <div style="padding: 0px; margin: 0px" class="row">
+        <div style="margin-top: 20px;" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+            <h5 class="text-muted">Select Friends to watch movie together 👥</h5>
+        </div>
+        <div style="margin-top: 20px;" class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+            <input style="margin-top: 7px;float:right; cursor:pointer;" id="select_all_friends" type="checkbox" name="select_all_friends" value="select" />
+            <label style="color:#0879FA;margin-top: 2px;font-size: 0.95rem;font-weight: bold;margin-right: 10px !important;float:right;" for="select_all_friends">Select All Friends : </label>
+        </div>
+      </div>
+      <% } %>
+      <div style="padding: 0px; margin: 10px 0px" class="card row">
+        <% if(friends.length > 0){ %>
+          <div style="padding: 0px; margin: 0px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <table class="friends_table table table-hover">
+                <thead>
+                  <tr>
+                    <th class="no_top_bottom_border text-center">#</th>
+                    <th class="no_top_bottom_border text-center">First Name</th>
+                    <th class="no_top_bottom_border text-center">Last Name</th>
+                    <th style="width: 15%;" class="no_top_bottom_border text-center">Movie Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i<friends.length; i++) {%>
+                  <tr>
+                    <td class="text-center">
+                        <input onchange="setSelectedUsers()" style="cursor: pointer;" id="checkbox_<%= friends[i].id %>" type="checkbox" name="checkbox_<%= friends[i].id %>" value="<%= friends[i].check %>" />
+                    </td>
+                    <td class="text-center"><%= friends[i].firstname %></td>
+                    <td class="text-center"><%= friends[i].lastname %></td>
+                    <td style="cursor: pointer;width: 15%;" class="text-center">
+                        <span class="badge badge-primary badge-pill">
+                          <% if(friends[i].movie_count > 5){ %>
+                            5+
+                          <% } else{ %>  
+                            <%= friends[i].movie_count %>
+                         <% } %>
+                        </span>
+                      </td>
+                  </tr>
+                <% } %>
+                </tbody>
+              </table>
+        </div>
+        <% } else if(random_movie){ %>  
+            <div class="text-center jumbotron">
+                <h1 class="display-4">Hurray ! 🎉🎉</h1>
+                <p class="lead" style="margin-top:10px">
+                    You all can now watch  
+                    <span style="font-weight: bold; font-style: italic; text-transform: capitalize;"><%= random_movie %> </span>
+                    together .... 📽 🎞 
+                </p>
+                <hr class="my-4">
+                <p>
+                    Enjoy Watching 
+                    <span style="font-weight: bold; font-style: italic; text-transform: capitalize;"><%= random_movie %> </span> 
+                    🎥 👥
+                </p>
+                <p class="lead text-center">
+                  <a style="margin-top:10px" class="btn btn-primary btn-sm" href="/organizer" role="button">
+                    Watch Another Movie With Your Friends.
+                </a>
+                </p>
+              </div>
+         <% } else{ %>  
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div style="margin:0px !important" class="text-center alert alert-info" role="alert">
+                No Friends Yet.
+              </div>
+            </div>
+          </div>
+       <% } %>
+    </div>
+    <div class="row text-center">
+        <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="random_movie_form" name="random_movie_form" action="get_random_movie/" method="post">
+            <div class="row form-group">
+                <div style="display: none;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <label for="selected_friends">Checkboxes Values</label>
+                    <input style="display: hidden;" type="text" id="selected_friends" class="form-control" value="selected_friends" name="selected_users">
+                </div>
+            </div>
+            <% if(!random_movie){ %>
+            <div class="row form-group">
+                <div style="margin-bottom:12px" class="custom_msgs col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <% if(messages.success){ %>
+                        <span style="color: #0F9D58;">
+                            <%- messages.success %>
+                        </span>
+                    <% } else if(messages.info){ %>  
+                        <span style="color: #0879FA;">
+                            <%- messages.info %>
+                        </span>
+                    <% } else if(messages.warning){ %>  
+                        <span style="color: orange;">
+                            <%- messages.warning %>
+                        </span>
+                    <% } 
+                    else{ %>  
+                        <span style="color: red;">
+                            <%- messages.error %>
+                        </span>
+                    <% } %>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <button type="submit" class="btn btn-sm btn-success">ORGANIZE MOVIE</button>
+                </div>
+            </div>
+            <% } %>
+        </form>
+    </div>
+</body>
+<%- include('partials/scripts'); -%>
+</html>    
