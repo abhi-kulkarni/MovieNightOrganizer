@@ -157,10 +157,10 @@ app.get('/get_all_friends', function(req, res) {
       });      
 });
 
-app.get('/organizer', function(req, res, next) {
+app.get('/movie_organizer', function(req, res, next) {
     request.get(api+'/get_all_friends', function (error, response, body) {
         let friends = JSON.parse(body)['friends'];
-        res.render('organizer', { random_movie:false, user: {}, friends: friends });
+        res.render('movie_organizer', { random_movie:false, user: {}, friends: friends });
       }); 
 });
 
@@ -168,7 +168,7 @@ app.post('/get_random_movie', function(req, res) {
     let friend_id_list = req.body.selected_users;
     if(friend_id_list === 'selected_friends'){
         req.flash("info", "Select Atleast One Friend To Watch A Movie");
-        res.redirect('/organizer');
+        res.redirect('/movie_organizer');
     }else{
         friend_id_list = friend_id_list.split(',');
         let options = { 
@@ -184,7 +184,7 @@ app.post('/get_random_movie', function(req, res) {
             }else{
                 req.flash("error", "Some Error Occured");
             }
-            res.render('organizer', { random_movie: random_movie, user: {}, friends: [] });
+            res.render('movie_organizer', { random_movie: random_movie, user: {}, friend_id_list:friend_id_list, friends: [] });
         });    
     }
 });

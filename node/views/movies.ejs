@@ -8,14 +8,22 @@
     <%- include('partials/navbar'); -%>
     <div class="custom_container container">
       <div style="padding: 0px; margin: 0px" class="row">
-        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
-            <span id="back_button" style="cursor: pointer;color:grey" data-tooltip="tooltip" title="Back" onclick="location.href='/'" class="material-icons">
-              keyboard_backspace
-            </span>
-        </div>
+          <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+              <span id="back_button" style="cursor: pointer;color:grey" data-tooltip="tooltip" title="Back" onclick="location.href='/'" class="material-icons">
+                keyboard_backspace
+              </span>
+          </div>
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <img style="cursor: pointer;" height="75" width="75" src="/images/default_friend_avatar.jpg" alt="user_profile_picture" class="rounded-circle">
           </div>
+      </div>
+      <div style="margin: 10px 0px 5px 0px" class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div style="font-size: 1rem;">
+            <span style="font-weight: bold">Friend: </span>
+            <span style="color: #0879FA"><%= friend.firstname %> <%= friend.lastname %></span>
+          </div>
+        </div>
       </div>
       <div style="padding: 0px; margin: 0px" class="row">
         <div style="margin-top: 20px;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -136,7 +144,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="addMoviesModalTitle">Add Movies</h5>
+                  <h5 class="modal-title" id="addMoviesModalTitle">Add Movie</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>

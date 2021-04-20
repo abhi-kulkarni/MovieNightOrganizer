@@ -87,8 +87,8 @@ $(document).ready(function(){
 
     if(window.location.pathname === '/'  || window.location.pathname.includes('movies')){
         $('#friends_tab').css({"color": "#0879FA"});
-    }else if(window.location.pathname === '/organizer'){
-        $('#organizer_tab').css({"color": "#0879FA"});
+    }else if(window.location.pathname === '/movie_organizer'){
+        $('#movie_organizer_tab').css({"color": "#0879FA"});
     }
     
     $('[data-toggle="popover"]').popover();
@@ -190,3 +190,7 @@ $('#select_all_friends').change(function () {
         $('#selected_friends').val('selected_friends');
     }
 });
+
+function getRandomMovie (){
+    window.location.reload();
+}

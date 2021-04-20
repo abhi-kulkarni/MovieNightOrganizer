@@ -7,6 +7,11 @@
 <body>
     <%- include('partials/navbar'); -%>
     <div class="custom_container container">
+      <div style="padding: 0px; margin: 0px" class="text-center row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <img style="cursor: pointer;" height="75" width="75" src="/images/friends.jpg" alt="user_profile_picture" class="rounded-circle">
+        </div>
+    </div>
         <div style="padding: 0px; margin: 0px" class="row">
             <div style="margin-top: 20px;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
                 <h5 class="text-muted">Add Friends</h5>
@@ -56,7 +61,7 @@
                                 <div onclick="location.href='/delete_friend/<%= friends[i].id %>'" data-tooltip="tooltip" title="Delete" style="cursor: pointer;color:red;font-size:1.1rem" class="material-icons">delete</div>
                               </div>
                               <div style="padding: 0px;margin: 0px;" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 ">
-                                <div onclick="location.href = '/movies/<%= friends[i].id %>'" data-tooltip="tooltip" title="View Movies" style="cursor: pointer;color:#0F9D58;font-size:1.1rem;" class="material-icons">local_movies</div>
+                                <div onclick="location.href = '/movies/<%= friends[i].id %>'" data-tooltip="tooltip" title="Manage Movies" style="cursor: pointer;color:#0F9D58;font-size:1.1rem;" class="material-icons">local_movies</div>
                               </div>
                             </div>
                           <!-- Edit Friend Modal -->
@@ -154,7 +159,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="addFriendsModalTitle">Add Friends</h5>
+                  <h5 class="modal-title" id="addFriendsModalTitle">Add Friend</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
