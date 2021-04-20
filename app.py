@@ -12,7 +12,7 @@ class Config:
     SECRET_KEY = env("MOVIE_NIGHT_ORGANIZER_SECRET_KEY",
                      "\xbe\x07Sw,h.\x81\xdb\x7f\x18\xb0j\xf1\xfd=`_\xb5\xb3\xb3\x15\xefNks\x991}\x12m\xc8")
     SQLALCHEMY_DATABASE_URI = env(
-        "MOVIE_NIGHT_ORGANIZER_SQL_ALCHEMY_DATABASE_URI", "mysql://root:Windows18!@localhost/movie_night_organizer")
+        "MOVIE_NIGHT_ORGANIZER_SQL_ALCHEMY_DATABASE_URI", "mysql://<user>:<password>@localhost/movie_night_organizer")
 
 app = Flask(__name__)
 
